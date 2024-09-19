@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intrusion Detection Dashboard</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Intrusion Detection System</title>
 </head>
 <body>
-    <header>
-        Intrusion Detection System
-    </header>
-    <div class="container">
-        <h2>Predict Anomaly</h2>
-        <button id="predict-button">Predict</button>
-    </div>
-    <script src="/static/js/main.js"></script>
+    <h1>Network Intrusion Detection System</h1>
+    <form id="predictForm">
+        <label for="features">Enter Features:</label><br>
+        <input type="text" id="features" name="features" required><br><br>
+        <button type="button" onclick="makePrediction()">Submit</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        function makePrediction() {
+            const features = document.getElementById("features").value;
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ features: features.split(',').map(Number) }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML = `Prediction: ${data.prediction}`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 </body>
 </html>

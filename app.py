@@ -26,10 +26,10 @@ def predict():
     # Make a prediction
     prediction = rf_model.predict(input_features)
 
-    # Return the result as JSON
+
     output = {'prediction': int(prediction[0])}
     return jsonify(output)
 
 if __name__ == '__main__':
-    # Run the Flask app with SSL (if using certs, otherwise just run without)
-    app.run(host='0.0.0.0', port=8080, ssl_context=('certs/cert.pem', 'certs/key.pem'))
+
+    app.run(host='172.168.1.1', port=8080, ssl_context=('certs/cert.pem', 'certs/key.pem'))
